@@ -11,10 +11,11 @@ set(LOG20_TEST_TARGET_NAME Log20.Tests)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
 
-find_package(Catch2 3 REQUIRED)
+find_package(Catch2 3 QUIET)
 if(NOT Catch2_FOUND)
-    message(WARNING "Catch2 not found. Skipping building tests")
-    return()
+    include(../conan/catch2.cmake)
+    #essage(WARNING "Catch2 not found. Skipping building tests")
+    #return()
 endif()
 
 ###############################################################################
