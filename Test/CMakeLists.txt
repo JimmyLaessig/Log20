@@ -14,8 +14,6 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
 find_package(Catch2 3 QUIET)
 if(NOT Catch2_FOUND)
     include(../conan/catch2.cmake)
-    #essage(WARNING "Catch2 not found. Skipping building tests")
-    #return()
 endif()
 
 ###############################################################################
