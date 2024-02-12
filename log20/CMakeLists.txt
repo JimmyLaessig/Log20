@@ -9,23 +9,19 @@ set(LOG20_TARGET_NAME Log20)
 # Target-specific definition of static or shared build
 ###############################################################################
 
-if (MSVC)
-    option(LOG20_BUILD_SHARED_LIBS "Build and link ${LOG20_TARGET_NAME} as a shared library" ON)
-else()
-    option(LOG20_BUILD_SHARED_LIBS "Build and link ${LOG20_TARGET_NAME} as a shared library" OFF)
-endif()
+option(LOG20_BUILD_SHARED_LIBRARY "Build and link ${LOG20_TARGET_NAME} as a shared library" OFF)
 
-if (LOG20_BUILD_SHARED_LIBS)
-    set(LOG20_BUILD_TYPE SHARED)
+if (LOG20_BUILD_SHARED_LIBRARY)
+    set(LOG20_LIBRARY_TYPE SHARED)
 else()
-    set(LOG20_BUILD_TYPE STATIC)
-endif()
+    set(LOG20_LIBRARY_TYPE STATIC)
+endif(LOG20_BUILD_SHARED_LIBRARY)
 
 ###############################################################################
 # Create the Log20 library
 ###############################################################################
 
-add_library(${LOG20_TARGET_NAME} ${LOG20_BUILD_TYPE})
+add_library(${LOG20_TARGET_NAME} ${LOG20_LIBRARY_TYPE})
 
 # The source location of the Log20 library
 set(LOG20_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
@@ -83,7 +79,7 @@ target_sources(${LOG20_TARGET_NAME}
 # Generate the export header
 ################################################################################
 
-set(LOG20_EXPORT_HEADER ${CMAKE_CURRENT_BINARY_DIR}/System.h)
+set(LOG20_EXPORT_HEADER ${CMAKE_CURRENT_BINARY_DIR}/${LOG20_TARGET_NAME}/System.h)
 
 include(GenerateExportHeader)
 
@@ -91,12 +87,18 @@ include(GenerateExportHeader)
 # suitable preprocessor for the EXPORT macros to be used in library classes. The
 # header is automatically populated with the proper preprocessor defines based
 # on the platform and build type (shared, static). 
-# (https://cmake.org/cmake/help/latest/module/GenerateExportHeader.ixxtml)
+# (https://cmake.org/cmake/help/latest/module/GenerateExportHeader.html)
 generate_export_header(${LOG20_TARGET_NAME}
     EXPORT_FILE_NAME
        ${LOG20_EXPORT_HEADER}
     EXPORT_MACRO_NAME 
         LOG20_API)
+
+# The generated export header relies on this compile definition to distinguish 
+# between static or shared build      
+target_compile_definitions(${LOG20_TARGET_NAME} 
+                           PUBLIC 
+                           "$<$<NOT:$<BOOL:${LOG20_BUILD_SHARED_LIBRARY}>>:LOG20_STATIC_DEFINE>")
 
 ###############################################################################
 # Set target properties
@@ -142,10 +144,7 @@ install(TARGETS ${LOG20_TARGET_NAME}
 
 # Install the public module files
 install(FILES ${LOG20_PUBLIC_MODULES}
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${LOG20_TARGET_NAME})
-
-# Install the export header
-install(FILES ${LOG20_EXPORT_HEADER}
+              ${LOG20_EXPORT_HEADER}
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${LOG20_TARGET_NAME})
 
 # Install the .pdb file in debug builds (MSVC only)

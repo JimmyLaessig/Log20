@@ -50,7 +50,7 @@ target_link_libraries(${LOG20_TEST_TARGET_NAME}
 # Depending whether or not the library was built as static or shared, copy the
 # DLL to the binary directory of the excutable so that it can be found at 
 # runtime.
-if (LOG20_BUILD_SHARED_LIBS)
+if (LOG20_BUILD_SHARED_LIBRARY)
     get_target_property(LOG20_BINARY_DIR Log20 BINARY_DIR)
     if (MSVC)
         set(LOG20_BINARY_FILES "${LOG20_BINARY_DIR}/$<CONFIG>/")

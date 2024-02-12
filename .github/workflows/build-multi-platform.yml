@@ -50,14 +50,14 @@ jobs:
 #      run: conan install conanfile.txt -s build_type=${{ matrix.build_type }} --install-folder=${{ github.workspace }}/build --build=missing
 
     - name: Configure CMake
-      # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
-      # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
+      # Configure CMake in a 'build' subdirectory. `CMAKE_LIBRARY_TYPE` is only required if you are using a single-configuration generator such as make.
+      # See https://cmake.org/cmake/help/latest/variable/CMAKE_LIBRARY_TYPE.html?highlight=cmake_LIBRARY_TYPE
       run: cmake 
         -S ${{ github.workspace }}
         -B ${{ github.workspace }}/build
         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
         -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
-        -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+        -DCMAKE_LIBRARY_TYPE=${{ matrix.build_type }}
 
     - name: Build
       run: cmake --build ${{ github.workspace }}/build --config ${{ matrix.build_type }}

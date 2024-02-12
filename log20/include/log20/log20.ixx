@@ -1,6 +1,6 @@
 module;
 
-#include <System.h>
+#include <Log20/System.h>
 
 #include <format>
 #include <source_location>
@@ -51,7 +51,6 @@ LOG20_API void verbose(const Log::FormatString<Args...> format, Args&&... args)
 /**
  * The message is logged if the logger's log level is DEBUG or lower.
  */
-export
 template<typename ...Args>
 LOG20_API void debug(const FormatString<Args...> format, Args&&... args)
 {
@@ -65,7 +64,6 @@ LOG20_API void debug(const FormatString<Args...> format, Args&&... args)
 /**
  * The message is logged if the logger's log level is INFO or lower.
  */
-export
 template<typename ...Args>
 LOG20_API void info(const FormatString<Args...> format, Args&&... args)
 {
@@ -79,7 +77,6 @@ LOG20_API void info(const FormatString<Args...> format, Args&&... args)
 /**
  * The message is logged if the logger's log level is WARNING or lower.
  */
-export
 template<typename ...Args>
 LOG20_API void warn(const FormatString<Args...> format, Args&&... args)
 {
@@ -93,7 +90,6 @@ LOG20_API void warn(const FormatString<Args...> format, Args&&... args)
 /**
  * The message is logged if the logger's log level is ERROR or lower.
  */
-export
 template<typename ...Args>
 LOG20_API void error(const FormatString<Args...> format, Args&&... args)
 {

@@ -1,13 +1,14 @@
 module;
 
-#include <System.h>
+#include <Log20/System.h>
 
 #include <filesystem>
-#include <string_view>
-#include <source_location>
-#include <memory>
-#include <optional>
 #include <fstream>
+#include <memory>
+#include <mutex>
+#include <optional>
+#include <source_location>
+#include <string_view>
 
 export module Log20.DefaultLogger;
 
@@ -22,6 +23,11 @@ class LOG20_API DefaultLogger : public Logger
 public:
 
 	DefaultLogger();
+
+	~DefaultLogger()
+	{
+
+	}
 
 	/// Get the path to the log file
 	std::filesystem::path getLogFilePath() const override;
