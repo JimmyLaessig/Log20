@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.27)
+cmake_minimum_required(VERSION 3.28)
 
 project(Log20)
 
@@ -7,14 +7,15 @@ project(Log20)
 ###############################################################################
 
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_EXPERIMENTAL_CXX_MODULE_CMAKE_API "aa1f7df0-828a-4fcd-9afc-2dc80491aca7")
-set(CMAKE_EXPERIMENTAL_CXX_MODULE_DYNDEP 1)
-set(CMAKE_CXX_STANDARD_REQUIRED YES)
+set(CMAKE_CXX_EXTENSIONS FALSE)
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_VISIBILITY_INLINES_HIDDEN TRUE)
 
-option(LOG20_BUILD_TESTS "Enable/Disable building Log20 unit tests" OFF)
+option(LOG20_BUILD_TESTS "Enable/Disable building Log20 unit tests" ON)
 
-add_subdirectory(Log20)
+add_subdirectory(src/Log20)
 
 if(LOG20_BUILD_TESTS)
+	find_package(Catch2 REQUIRED)
 	add_subdirectory(Test)
 endif(LOG20_BUILD_TESTS)

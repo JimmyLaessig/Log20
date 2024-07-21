@@ -94,6 +94,15 @@ generate_export_header(${LOG20_TARGET_NAME}
     EXPORT_MACRO_NAME 
         LOG20_API)
 
+ # Add the module implementation files
+target_sources(${LOG20_TARGET_NAME}
+    PUBLIC
+    FILE_SET public_headers 
+    TYPE HEADERS
+    BASE_DIRS ${CMAKE_CURRENT_BINARY_DIR}
+    FILES ${LOG20_EXPORT_HEADER}
+)
+
 # The generated export header relies on this compile definition to distinguish 
 # between static or shared build      
 target_compile_definitions(${LOG20_TARGET_NAME} 
