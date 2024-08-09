@@ -191,7 +191,12 @@ DefaultLogger::log(Log::Level level,
 
 	if (level <= mSourceLocationLogLevel)
 	{
+#ifdef WIN32
 		constexpr auto separator = '\\';
+#else
+		constexpr auto separator = '/';
+#endif // WIN32
+
 		std::string_view filename = location.file_name();
 		filename = filename.substr(filename.find_last_of(separator) + 1);
 		messageBuilder << filename << ":" << location.line() << " | ";

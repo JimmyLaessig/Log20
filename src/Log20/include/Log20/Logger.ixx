@@ -9,8 +9,6 @@ module;
 
 export module Log20.Logger;
 
-
-
 export namespace Log
 {
 
@@ -25,7 +23,6 @@ enum class Level
 };
 
 
-/// Get the string representration of the log level
 constexpr std::string_view
 toString(Log::Level level)
 {
@@ -42,7 +39,6 @@ toString(Log::Level level)
 }
 
 
-/// Get the string representration of the log level
 constexpr Log::Level
 toLogLevel(std::string_view level)
 {
